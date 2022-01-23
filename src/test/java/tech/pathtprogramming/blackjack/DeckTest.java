@@ -1,6 +1,5 @@
 package tech.pathtprogramming.blackjack;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.pathtoprogramming.blackjack.Deck;
 
@@ -18,5 +17,13 @@ class DeckTest {
         int count = deck.count();
 
         assertThat(count).isEqualTo(52);
+    }
+
+    @Test
+    void youCanShuffleADeckOfCards() {
+        String initialTopCardRank = deck.lookAtTopCard().cardRank();
+        deck.shuffle();
+
+        assertThat(deck.lookAtTopCard().cardRank()).isNotEqualTo(initialTopCardRank);
     }
 }
