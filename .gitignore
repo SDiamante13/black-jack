@@ -1,7 +1,7 @@
 build/
 .gradle/
-!**/src/main/**/target/
-!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### IntelliJ IDEA ###
 .idea
@@ -9,6 +9,4 @@ build/
 *.iml
 *.ipr
 
-## Secrets
-src/main/resources/application-secret.yml
-
+out/
