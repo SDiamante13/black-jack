@@ -15,13 +15,13 @@ public enum Card {
     KING("K", 10),
     ACE_HIGH("A", 11);
 
-    Card(final String rank, final int value) {
+    Card(String rank, int value) {
         this.rank = rank;
         this.value = value;
     }
 
-    private String rank;
-    private int value;
+    private final String rank;
+    private final int value;
 
     public String cardRank() {
         return rank;
