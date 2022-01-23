@@ -1,4 +1,4 @@
-package tech.pathtprogramming.blackjack;
+package tech.pathtoprogramming.blackjack;
 
 import org.junit.jupiter.api.Test;
 

@@ -26,4 +26,8 @@ public enum Card {
     public String cardRank() {
         return rank;
     }
+
+    public int value() {
+        return value;
+    }
 }

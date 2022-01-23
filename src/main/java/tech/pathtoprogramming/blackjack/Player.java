@@ -19,4 +19,10 @@ public class Player {
     public void addCard(Card card) {
         cards.add(card);
     }
+
+    public int totalHandValue() {
+        return cards.stream()
+                .map(Card::value)
+                .reduce(0, Integer::sum);
+    }
 }

@@ -1,8 +1,9 @@
-package tech.pathtprogramming.blackjack;
+package tech.pathtoprogramming.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import tech.pathtoprogramming.blackjack.Deck;
 import tech.pathtoprogramming.blackjack.NoPlayersException;
@@ -19,7 +20,7 @@ class DeckTest {
         assertThat(count).isEqualTo(52);
     }
 
-    @Test
+    @RepeatedTest(3)
     void youCanShuffleADeckOfCards() {
         String initialTopCardRank = deck.lookAtTopCard().cardRank();
         deck.shuffle();
