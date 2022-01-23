@@ -1,28 +1,23 @@
 package tech.pathtoprogramming.blackjack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
     private final String name;
-    private List<Card> cards;
+    private Hand hand;
 
     public Player(String name) {
         this.name = name;
-        this.cards = new ArrayList<>();
-    }
-
-    public int handCount() {
-        return cards.size();
+        this.hand = new Hand();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        hand.addCard(card);
+    }
+
+    public int handCount() {
+        return hand.handCount();
     }
 
     public int totalHandValue() {
-        return cards.stream()
-                .map(Card::value)
-                .reduce(0, Integer::sum);
+        return hand.totalValue();
     }
 }

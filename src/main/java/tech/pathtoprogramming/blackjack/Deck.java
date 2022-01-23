@@ -3,7 +3,6 @@ package tech.pathtoprogramming.blackjack;
 import static java.util.Collections.addAll;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,17 +21,6 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(cards);
-    }
-
-
-    // TODO: move to game object
-    public void deal(Player ... players) {
-        if (players == null || players.length == 0) {
-            throw new NoPlayersException();
-        }
-
-        Arrays.stream(players).forEach(player -> player.addCard(drawCard()));
-        Arrays.stream(players).forEach(player -> player.addCard(drawCard()));
     }
 
     public int cardCount() {

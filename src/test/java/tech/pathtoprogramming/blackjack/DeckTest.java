@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import tech.pathtoprogramming.blackjack.Deck;
-import tech.pathtoprogramming.blackjack.NoPlayersException;
-import tech.pathtoprogramming.blackjack.Player;
 
 class DeckTest {
 
@@ -29,25 +26,9 @@ class DeckTest {
     }
 
     @Test
-    void cannotDealCardsToNoPlayers() {
-        assertThrows(NoPlayersException.class, deck::deal);
-    }
-
-    @Test
     void drawingACardFromTheDeckReducesTheCardCount() {
         deck.drawCard();
 
         assertThat(deck.cardCount()).isEqualTo(51);
-    }
-
-    @Test
-    void deal2CardsToEveryPlayer() {
-        Player player1 = new Player("Lois");
-        Player player2 = new Player("Clark");
-
-        deck.deal(player1, player2);
-
-        assertThat(player1.handCount()).isEqualTo(2);
-        assertThat(player2.handCount()).isEqualTo(2);
     }
 }
