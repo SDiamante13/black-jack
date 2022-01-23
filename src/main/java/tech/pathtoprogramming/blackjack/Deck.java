@@ -1,6 +1,7 @@
 package tech.pathtoprogramming.blackjack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class Deck {
         if (players == null || players.length == 0) {
             throw new NoPlayersException();
         }
+
+        Arrays.stream(players).forEach(player -> player.addCard(drawCard()));
+        Arrays.stream(players).forEach(player -> player.addCard(drawCard()));
     }
 
     public int cardCount() {
@@ -39,7 +43,7 @@ public class Deck {
         return cards.get(0);
     }
 
-    public Card draw() {
+    public Card drawCard() {
         return cards.remove(0);
     }
 }

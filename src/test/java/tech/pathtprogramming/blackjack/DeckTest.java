@@ -1,6 +1,5 @@
 package tech.pathtprogramming.blackjack;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import tech.pathtoprogramming.blackjack.Deck;
 import tech.pathtoprogramming.blackjack.NoPlayersException;
@@ -38,16 +37,15 @@ class DeckTest {
 
     @Test
     void drawingACardFromTheDeckReducesTheCardCount() {
-        deck.draw();
+        deck.drawCard();
 
         assertThat(deck.cardCount()).isEqualTo(51);
     }
 
     @Test
-    @Disabled
     void deal2CardsToEveryPlayer() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+        Player player1 = new Player("Lois");
+        Player player2 = new Player("Clark");
 
         deck.deal(player1, player2);
 
