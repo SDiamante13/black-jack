@@ -11,12 +11,24 @@ public class Game {
         this.players = players;
     }
 
-    public void deal() {
+    public void dealOneCardToAllPlayers() {
         if (players == null || players.length == 0) {
             throw new NoPlayersException();
         }
 
         Arrays.stream(players).forEach(player -> player.addCard(deck.drawCard()));
-        Arrays.stream(players).forEach(player -> player.addCard(deck.drawCard()));
+    }
+
+    public void start() {
+        dealTwoCardsToEachPlayer();
+    }
+
+    private void dealTwoCardsToEachPlayer() {
+        dealOneCardToAllPlayers();
+        dealOneCardToAllPlayers();
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 }

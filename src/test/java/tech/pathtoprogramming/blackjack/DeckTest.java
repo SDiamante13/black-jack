@@ -1,10 +1,10 @@
 package tech.pathtoprogramming.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.RepeatedTest;
+import io.github.artsok.RepeatedIfExceptionsTest;
 import org.junit.jupiter.api.Test;
+
 
 class DeckTest {
 
@@ -17,7 +17,7 @@ class DeckTest {
         assertThat(count).isEqualTo(52);
     }
 
-    @RepeatedTest(3)
+    @RepeatedIfExceptionsTest(repeats = 3)
     void youCanShuffleADeckOfCards() {
         String initialTopCardRank = deck.lookAtTopCard().cardRank();
         deck.shuffle();
