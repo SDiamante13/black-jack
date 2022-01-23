@@ -1,19 +1,16 @@
 package tech.pathtprogramming.blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 import tech.pathtoprogramming.blackjack.Deck;
 import tech.pathtoprogramming.blackjack.NoPlayersException;
 import tech.pathtoprogramming.blackjack.Player;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 class DeckTest {
-    private final Deck deck = new Deck();
 
-    // when you initialize a deck it contains 52 cards
-    // you can *shuffle* a deck of cards
-    // a special Player called a Dealer can *deal* cards
+    private final Deck deck = new Deck();
 
     @Test
     void whenYouInitializeADeckItContains52Cards() {
