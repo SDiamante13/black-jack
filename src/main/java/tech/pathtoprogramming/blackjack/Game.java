@@ -22,7 +22,7 @@ public class Game {
         eachPlayerPlaysHand(players);
         dealerPlaysHand();
 
-        if (hasDealerWon(players.get(0))
+        if (hasDealerWon(players)
         ) {
             return dealer.name();
         } else {
@@ -58,9 +58,16 @@ public class Game {
                 .anyMatch(player -> !player.isBusted());
     }
 
-    private boolean hasDealerWon(Player activePlayer) {
-        return activePlayer.isBusted()
+    private boolean hasDealerWon(List<Player> players) {
+        Player player = players.get(0);
+
+        return allPlayersBust(players)
                 || !dealer.isBusted()
-                && dealer.totalHandValue() > activePlayer.totalHandValue();
+                && dealer.totalHandValue() > player.totalHandValue();
+    }
+
+    private boolean allPlayersBust(List<Player> players) {
+        return players.stream()
+                .allMatch(Player::isBusted);
     }
 }

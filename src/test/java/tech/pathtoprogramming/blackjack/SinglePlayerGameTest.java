@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.verification.VerificationMode;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import static tech.pathtoprogramming.blackjack.ActionType.HIT;
 import static tech.pathtoprogramming.blackjack.ActionType.STAY;
 
 @ExtendWith(MockitoExtension.class)
-class GameTest {
+class SinglePlayerGameTest {
 
     @Mock
     private Deck mockDeck;
@@ -121,7 +120,6 @@ class GameTest {
 
         assertThat(winner).isEqualTo(DEALER);
     }
-
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
         given(actionInput.nextActionType()).willReturn(actionType);
