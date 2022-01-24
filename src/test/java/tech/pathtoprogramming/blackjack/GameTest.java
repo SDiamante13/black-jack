@@ -1,18 +1,21 @@
 package tech.pathtoprogramming.blackjack;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+@ExtendWith(MockitoExtension.class)
 class GameTest {
 
+    @Mock
     private Deck mockDeck;
     private List<Player> players;
     private Dealer dealer;
@@ -20,8 +23,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        mockDeck = Mockito.mock(Deck.class);
-        players = Arrays.asList(new Player("Phil"));
+        players = List.of(new Player("Phil"));
         dealer = new Dealer("James", mockDeck);
         game = new Game(dealer, players);
     }
@@ -29,13 +31,7 @@ class GameTest {
     @Test
     void dealAllPlayersAndDealerTwoCards() {
         given(mockDeck.drawCard())
-                        .willReturn(Card.TEN);
-        given(mockDeck.drawCard())
-                        .willReturn(Card.TEN);
-        given(mockDeck.drawCard())
-                .willReturn(Card.FIVE);
-        given(mockDeck.drawCard())
-                .willReturn(Card.THREE);
+                .willReturn(Card.TEN, Card.TEN, Card.FIVE, Card.THREE);
 
         game.start();
 
