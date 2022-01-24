@@ -53,9 +53,9 @@ class GameTest {
                         player1Cards.get(2)
                         );
 
-        game.start();
+        String winner = game.play();
 
-        assertThat(game.winner()).isEqualTo(DEALER);
+        assertThat(winner).isEqualTo(DEALER);
     }
 
     @Test
@@ -72,9 +72,9 @@ class GameTest {
                         dealerCards.get(2)
                 );
 
-        game.start();
+        String winner = game.play();
 
-        assertThat(game.winner()).isEqualTo(PLAYER_1);
+        assertThat(winner).isEqualTo(PLAYER_1);
     }
 
     @Test
@@ -91,9 +91,9 @@ class GameTest {
                         dealerCards.get(2)
                 );
 
-        game.start();
+        String winner = game.play();
 
-        assertThat(game.winner()).isEqualTo(DEALER);
+        assertThat(winner).isEqualTo(DEALER);
     }
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {

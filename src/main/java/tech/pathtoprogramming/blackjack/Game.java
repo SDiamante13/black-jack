@@ -24,7 +24,7 @@ public class Game {
         hit(dealer);
     }
 
-    public void start() {
+    public String play() {
         // TODO: clear state of players
 
         dealOneCardToAllPlayers();
@@ -51,9 +51,9 @@ public class Game {
         if (activePlayer.isBusted()
                 || !dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue()
         ) {
-            winner = dealer.name();
+            return dealer.name();
         } else {
-            winner = activePlayer.name();
+            return activePlayer.name();
         }
     }
 
