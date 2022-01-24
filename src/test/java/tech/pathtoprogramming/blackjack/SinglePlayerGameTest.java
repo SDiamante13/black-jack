@@ -24,9 +24,6 @@ class SinglePlayerGameTest {
     @Mock
     private ActionInput mockActionInput;
 
-    private List<Player> players;
-    private Player player1;
-    private Dealer dealer;
     private Game game;
 
     private static final String DEALER = "DEALER";
@@ -37,10 +34,10 @@ class SinglePlayerGameTest {
 
     @BeforeEach
     void setUp() {
-        player1 = new Player(PLAYER_1, mockActionInput);
-        players = List.of(player1);
-        dealer = new Dealer(DEALER, mockDeck);
-        game = new Game(dealer, players);
+        game = new Game(
+                new Dealer(DEALER, mockDeck),
+                List.of(new Player(PLAYER_1, mockActionInput))
+        );
     }
 
     @Test
