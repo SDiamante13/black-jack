@@ -3,10 +3,17 @@ package tech.pathtoprogramming.blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class PlayerTest {
 
-    private final Player player = new Player("Lorenzo");
+    @Mock
+    private ActionInput mockActionInput;
+
+    private final Player player = new Player("Lorenzo", mockActionInput);
 
     @Test
     void playerCanAddACard() {

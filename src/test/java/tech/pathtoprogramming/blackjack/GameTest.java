@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -13,12 +12,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 import static tech.pathtoprogramming.blackjack.ActionType.HIT;
+import static tech.pathtoprogramming.blackjack.ActionType.STAY;
 
 @ExtendWith(MockitoExtension.class)
 class GameTest {
 
     @Mock
     private Deck mockDeck;
+
+    @Mock
+    private ActionInput mockActionInput;
+
     private List<Player> players;
     private Player player1;
     private Dealer dealer;
@@ -29,7 +33,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        player1 = Mockito.spy(new Player(PLAYER_1));
+        player1 = new Player(PLAYER_1, mockActionInput);
         players = List.of(player1);
         dealer = new Dealer(DEALER, mockDeck);
         game = new Game(dealer, players);
@@ -37,8 +41,7 @@ class GameTest {
 
     @Test
     void player1Hits_newHandValueOf22_dealerWins() {
-        playerChoosesTo(player1, HIT);
-
+        playerChoosesTo(mockActionInput, HIT);
         List<Card> player1Cards = List.of(Card.TEN, Card.FIVE, Card.SEVEN);
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE);
         given(mockDeck.drawCard())
@@ -57,7 +60,7 @@ class GameTest {
 
     @Test
     void player1ChoosesToStay_dealerBusts_player1Wins() {
-        playerChoosesTo(player1, ActionType.STAY);
+        playerChoosesTo(mockActionInput, STAY);
         List<Card> player1Cards = List.of(Card.TEN, Card.FIVE);
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE, Card.KING);
         given(mockDeck.drawCard())
@@ -76,7 +79,7 @@ class GameTest {
 
     @Test
     void player1DoesNotBust_dealerHasHigherTotal_dealerWins() {
-        playerChoosesTo(player1, ActionType.STAY);
+        playerChoosesTo(mockActionInput, STAY);
         List<Card> player1Cards = List.of(Card.TEN, Card.FIVE);
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE, Card.SEVEN);
         given(mockDeck.drawCard())
@@ -93,7 +96,7 @@ class GameTest {
         assertThat(game.winner()).isEqualTo(DEALER);
     }
 
-    private void playerChoosesTo(Player player, ActionType hit) {
-        willReturn(hit).given(player).getPlayerActionType();
+    private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
+        given(actionInput.nextActionType()).willReturn(actionType);
     }
 }

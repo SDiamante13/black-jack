@@ -30,23 +30,25 @@ public class Game {
 
         Player activePlayer = players.get(0);
 
-        // TODO Move this logic to Player class
         while (!activePlayer.isBusted()) {
-            if (activePlayer.getPlayerActionType().equals(HIT)) {
+            if (activePlayer.nextActionType().equals(HIT)) {
                 hit(activePlayer);
-            } else if (activePlayer.getPlayerActionType().equals(STAY)) {
+            } else if (activePlayer.nextActionType().equals(STAY)) {
                 break;
             }
         }
 
         while (!dealer.isBusted()) {
             if (dealer.totalHandValue() < 17) {
-                hit(dealer);
+                dealer.dealCardTo(dealer);
             } else {
                 break;
             }
         }
-        if (activePlayer.isBusted() || (!dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue())) {
+
+        if (activePlayer.isBusted()
+                || !dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue()
+        ) {
             winner = dealer.name();
         } else {
             winner = activePlayer.name();

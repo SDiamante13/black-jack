@@ -23,4 +23,8 @@ public class Hand {
                 .map(Card::value)
                 .reduce(0, Integer::sum);
     }
+
+    boolean isHandBusted() {
+        return totalValue() > 21;
+    }
 }

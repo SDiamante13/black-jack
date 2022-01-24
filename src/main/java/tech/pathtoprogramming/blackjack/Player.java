@@ -1,14 +1,18 @@
 package tech.pathtoprogramming.blackjack;
 
-import java.util.Scanner;
-
 public class Player {
     private final String name;
+    private ActionInput actionInput;
     private Hand hand;
 
     public Player(String name) {
         this.name = name;
         this.hand = new Hand();
+    }
+
+    public Player(String name, ActionInput actionInput) {
+        this(name);
+        this.actionInput = actionInput;
     }
 
     public String name() {
@@ -28,14 +32,10 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return hand.totalValue() > 21;
+        return hand.isHandBusted();
     }
 
-    public ActionType getPlayerActionType() {
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("HIT or STAY");
-
-        String actionType = myObj.nextLine();
-        return ActionType.valueOf(actionType);
+    public ActionType nextActionType() {
+        return actionInput.nextActionType();
     }
 }
