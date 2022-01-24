@@ -4,10 +4,12 @@ public class Player {
     private final String name;
     private ActionInput actionInput;
     private Hand hand;
+    private boolean stay;
 
     public Player(String name) {
         this.name = name;
         this.hand = new Hand();
+        this.stay = false;
     }
 
     public Player(String name, ActionInput actionInput) {
@@ -37,5 +39,13 @@ public class Player {
 
     public ActionType nextActionType() {
         return actionInput.nextActionType();
+    }
+
+    public boolean isStaying() {
+        return stay;
+    }
+
+    public void stay() {
+       this.stay = true;
     }
 }

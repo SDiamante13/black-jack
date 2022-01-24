@@ -25,26 +25,28 @@ public class Game {
     }
 
     public void start() {
+        // TODO: clear state of players
+
         dealOneCardToAllPlayers();
         dealOneCardToAllPlayers();
 
         Player activePlayer = players.get(0);
 
-        while (!activePlayer.isBusted()) {
+        do {
             if (activePlayer.nextActionType().equals(HIT)) {
                 hit(activePlayer);
             } else if (activePlayer.nextActionType().equals(STAY)) {
-                break;
+                activePlayer.stay();
             }
-        }
+        } while (!activePlayer.isBusted() && !activePlayer.isStaying());
 
-        while (!dealer.isBusted()) {
+        do {
             if (dealer.totalHandValue() < 17) {
                 dealer.dealCardTo(dealer);
             } else {
-                break;
+                dealer.stay();
             }
-        }
+        } while (!dealer.isBusted() && !dealer.isStaying());
 
         if (activePlayer.isBusted()
                 || !dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue()
