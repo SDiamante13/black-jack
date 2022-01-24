@@ -2,9 +2,13 @@ package tech.pathtoprogramming.blackjack;
 
 import java.util.List;
 
+import static tech.pathtoprogramming.blackjack.ActionType.HIT;
+import static tech.pathtoprogramming.blackjack.ActionType.STAY;
+
 public class Game {
     private final List<Player> players;
     private final Dealer dealer;
+    private String winner;
 
     public Game(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
@@ -17,12 +21,40 @@ public class Game {
         }
 
         players.forEach(dealer::dealCardTo);
-        dealer.dealCardTo(dealer);
+        hit(dealer);
     }
 
     public void start() {
         dealOneCardToAllPlayers();
         dealOneCardToAllPlayers();
+
+        Player activePlayer = players.get(0);
+
+        // TODO Move this logic to Player class
+        while (!activePlayer.isBusted()) {
+            if (activePlayer.getPlayerActionType().equals(HIT)) {
+                hit(activePlayer);
+            } else if (activePlayer.getPlayerActionType().equals(STAY)) {
+                break;
+            }
+        }
+
+        while (!dealer.isBusted()) {
+            if (dealer.totalHandValue() < 17) {
+                hit(dealer);
+            } else {
+                break;
+            }
+        }
+        if (activePlayer.isBusted() || (!dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue())) {
+            winner = dealer.name();
+        } else {
+            winner = activePlayer.name();
+        }
+    }
+
+    private void hit(Player activePlayer) {
+        dealer.dealCardTo(activePlayer);
     }
 
     public List<Player> getPlayers() {
@@ -31,5 +63,9 @@ public class Game {
 
     public Player getDealer() {
         return dealer;
+    }
+
+    public String winner() {
+        return winner;
     }
 }

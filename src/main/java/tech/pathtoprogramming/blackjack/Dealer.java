@@ -13,6 +13,8 @@ public class Dealer extends Player {
         return deck;
     }
 
+
+
     public void dealCardTo(Player player) {
         player.addCard(deck.drawCard());
     }
