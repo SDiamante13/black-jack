@@ -1,31 +1,45 @@
 package tech.pathtoprogramming.blackjack;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
 class GameTest {
 
-    private Deck deck;
-    private Player[] players;
+    private Deck mockDeck;
+    private List<Player> players;
+    private Dealer dealer;
     private Game game;
-
 
     @BeforeEach
     void setUp() {
-        deck = new Deck();
-        deck.shuffle();
-        players = new Player[]{new Player("Phil"), new Player("Tracy")};
-        game = new Game(deck, players);
+        mockDeck = Mockito.mock(Deck.class);
+        players = Arrays.asList(new Player("Phil"));
+        dealer = new Dealer("James", mockDeck);
+        game = new Game(dealer, players);
     }
 
     @Test
-    void dealsTwoCardsToEachPlayerOnStart() {
+    void dealAllPlayersAndDealerTwoCards() {
+        given(mockDeck.drawCard())
+                        .willReturn(Card.TEN);
+        given(mockDeck.drawCard())
+                        .willReturn(Card.TEN);
+        given(mockDeck.drawCard())
+                .willReturn(Card.FIVE);
+        given(mockDeck.drawCard())
+                .willReturn(Card.THREE);
+
         game.start();
 
-        assertThat(game.getPlayers()[0].handCount()).isEqualTo(2);
-        assertThat(game.getPlayers()[1].handCount()).isEqualTo(2);
+        assertThat(game.getPlayers().get(0).handCount()).isEqualTo(2);
+        assertThat(game.getDealer().handCount()).isEqualTo(2);
     }
 }

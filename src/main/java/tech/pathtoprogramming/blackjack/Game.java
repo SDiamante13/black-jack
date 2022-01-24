@@ -1,34 +1,35 @@
 package tech.pathtoprogramming.blackjack;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class Game {
-    private final Deck deck;
-    private final Player[] players;
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    public Game(Deck deck, Player[] players) {
-        this.deck = deck;
+    public Game(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
         this.players = players;
     }
 
     public void dealOneCardToAllPlayers() {
-        if (players == null || players.length == 0) {
+        if (players == null || players.isEmpty()) {
             throw new NoPlayersException();
         }
 
-        Arrays.stream(players).forEach(player -> player.addCard(deck.drawCard()));
+        players.forEach(dealer::dealCardTo);
+        dealer.dealCardTo(dealer);
     }
 
     public void start() {
-        dealTwoCardsToEachPlayer();
-    }
-
-    private void dealTwoCardsToEachPlayer() {
         dealOneCardToAllPlayers();
         dealOneCardToAllPlayers();
     }
 
-    public Player[] getPlayers() {
+    public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player getDealer() {
+        return dealer;
     }
 }
