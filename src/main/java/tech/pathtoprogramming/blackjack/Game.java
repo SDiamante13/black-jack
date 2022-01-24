@@ -17,11 +17,9 @@ public class Game {
     public String play() {
         // TODO: clear state of players
 
-        dealOneCardToAllPlayers();
-        dealOneCardToAllPlayers();
+        dealer.initialDeal(players);
 
         eachPlayerPlaysHand(players);
-
         dealerPlaysHand();
 
         if (hasDealerWon(players.get(0))
@@ -32,29 +30,17 @@ public class Game {
         }
     }
 
-    public void dealOneCardToAllPlayers() {
-        if (players == null || players.isEmpty()) {
-            throw new NoPlayersException();
-        }
-
-        players.forEach(dealer::dealCardTo);
-        hit(dealer);
-    }
-
     private void eachPlayerPlaysHand(List<Player> players) {
+        // TODO: support multiple players
         Player player = players.get(0);
 
         do {
             if (player.nextActionType().equals(HIT)) {
-                hit(player);
+                dealer.dealCardTo(player);
             } else if (player.nextActionType().equals(STAY)) {
                 player.stay();
             }
         } while (!player.isBusted() && !player.isStaying());
-    }
-
-    private void hit(Player activePlayer) {
-        dealer.dealCardTo(activePlayer);
     }
 
     private void dealerPlaysHand() {
