@@ -49,7 +49,6 @@ class MultiplayerGameTest {
     }
 
     @Test
-    @Disabled
     void allPlayersBust_dealerWins_withoutNeedingToHit() {
         playerChoosesTo(mockActionInputPlayer1, HIT);
         playerChoosesTo(mockActionInputPlayer2, HIT);
@@ -71,9 +70,6 @@ class MultiplayerGameTest {
         String winner = game.play();
 
         assertThat(winner).isEqualTo(DEALER);
-        then(mockDeck)
-                .should(times(8))
-                .drawCard();
     }
 
 

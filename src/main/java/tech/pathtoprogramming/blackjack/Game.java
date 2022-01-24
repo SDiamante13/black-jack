@@ -31,16 +31,15 @@ public class Game {
     }
 
     private void eachPlayerPlaysHand(List<Player> players) {
-        // TODO: support multiple players
-        Player player = players.get(0);
-
-        do {
-            if (player.nextActionType().equals(HIT)) {
-                dealer.dealCardTo(player);
-            } else if (player.nextActionType().equals(STAY)) {
-                player.stay();
-            }
-        } while (!player.isBusted() && !player.isStaying());
+        for (Player player : players) {
+            do {
+                if (player.nextActionType().equals(HIT)) {
+                    dealer.dealCardTo(player);
+                } else if (player.nextActionType().equals(STAY)) {
+                    player.stay();
+                }
+            } while (!player.isBusted() && !player.isStaying());
+        }
     }
 
     private void dealerPlaysHand() {
