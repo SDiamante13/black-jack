@@ -41,20 +41,30 @@ public class Game {
         } while (!activePlayer.isBusted() && !activePlayer.isStaying());
 
         do {
-            if (dealer.totalHandValue() < 17) {
+            if (dealer.totalHandValue() < 17 && atLeastOnePlayerHasNotBusted(players)) {
                 dealer.dealCardTo(dealer);
             } else {
                 dealer.stay();
             }
         } while (!dealer.isBusted() && !dealer.isStaying());
 
-        if (activePlayer.isBusted()
-                || !dealer.isBusted() && dealer.totalHandValue() > activePlayer.totalHandValue()
+        if (hasDealerWon(activePlayer)
         ) {
             return dealer.name();
         } else {
             return activePlayer.name();
         }
+    }
+
+    private boolean atLeastOnePlayerHasNotBusted(List<Player> players) {
+        return players.stream()
+                .anyMatch(player -> !player.isBusted());
+    }
+
+    private boolean hasDealerWon(Player activePlayer) {
+        return activePlayer.isBusted()
+                || !dealer.isBusted()
+                && dealer.totalHandValue() > activePlayer.totalHandValue();
     }
 
     private void hit(Player activePlayer) {
