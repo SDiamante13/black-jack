@@ -69,8 +69,7 @@ class MultiplayerGameTest {
 
         List<Player> winners = game.play();
 
-        assertThat(winners).extracting("name")
-                .contains(DEALER);
+        thenDealerWins(winners);
     }
 
     @Test
@@ -100,5 +99,9 @@ class MultiplayerGameTest {
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
         given(actionInput.nextActionType()).willReturn(actionType);
+    }
+
+    private void thenDealerWins(List<Player> winners) {
+        assertThat(winners).isEmpty();
     }
 }

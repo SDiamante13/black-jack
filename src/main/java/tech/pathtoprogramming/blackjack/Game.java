@@ -1,5 +1,6 @@
 package tech.pathtoprogramming.blackjack;
 
+import java.util.Collections;
 import java.util.List;
 
 import static tech.pathtoprogramming.blackjack.ActionType.HIT;
@@ -24,7 +25,7 @@ public class Game {
 
         if (hasDealerWon(players)
         ) {
-            return List.of(dealer);
+            return Collections.emptyList();
         } else {
             return List.of(players.get(0));
         }

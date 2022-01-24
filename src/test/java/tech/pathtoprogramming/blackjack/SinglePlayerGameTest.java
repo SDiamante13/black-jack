@@ -56,8 +56,7 @@ class SinglePlayerGameTest {
 
         List<Player> winners = game.play();
 
-        assertThat(winners).extracting("name")
-                .contains(DEALER);
+        thenDealerWins(winners);
         then(mockDeck)
                 .should(times(5))
                 .drawCard();
@@ -99,8 +98,7 @@ class SinglePlayerGameTest {
 
         List<Player> winners = game.play();
 
-        assertThat(winners).extracting("name")
-                .contains(DEALER);
+        thenDealerWins(winners);
     }
 
     @Test
@@ -118,8 +116,11 @@ class SinglePlayerGameTest {
 
         List<Player> winners = game.play();
 
-        assertThat(winners).extracting("name")
-                .contains(DEALER);
+        thenDealerWins(winners);
+    }
+
+    private void thenDealerWins(List<Player> winners) {
+        assertThat(winners).isEmpty();
     }
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
