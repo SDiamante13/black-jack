@@ -6,13 +6,30 @@ import static tech.pathtoprogramming.blackjack.ActionType.HIT;
 import static tech.pathtoprogramming.blackjack.ActionType.STAY;
 
 public class Game {
-    private final List<Player> players;
     private final Dealer dealer;
-    private String winner;
+    private final List<Player> players;
 
     public Game(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
+    }
+
+    public String play() {
+        // TODO: clear state of players
+
+        dealOneCardToAllPlayers();
+        dealOneCardToAllPlayers();
+
+        eachPlayerPlaysHand(players);
+
+        dealerPlaysHand();
+
+        if (hasDealerWon(players.get(0))
+        ) {
+            return dealer.name();
+        } else {
+            return players.get(0).name();
+        }
     }
 
     public void dealOneCardToAllPlayers() {
@@ -24,22 +41,23 @@ public class Game {
         hit(dealer);
     }
 
-    public String play() {
-        // TODO: clear state of players
-
-        dealOneCardToAllPlayers();
-        dealOneCardToAllPlayers();
-
-        Player activePlayer = players.get(0);
+    private void eachPlayerPlaysHand(List<Player> players) {
+        Player player = players.get(0);
 
         do {
-            if (activePlayer.nextActionType().equals(HIT)) {
-                hit(activePlayer);
-            } else if (activePlayer.nextActionType().equals(STAY)) {
-                activePlayer.stay();
+            if (player.nextActionType().equals(HIT)) {
+                hit(player);
+            } else if (player.nextActionType().equals(STAY)) {
+                player.stay();
             }
-        } while (!activePlayer.isBusted() && !activePlayer.isStaying());
+        } while (!player.isBusted() && !player.isStaying());
+    }
 
+    private void hit(Player activePlayer) {
+        dealer.dealCardTo(activePlayer);
+    }
+
+    private void dealerPlaysHand() {
         do {
             if (dealer.totalHandValue() < 17 && atLeastOnePlayerHasNotBusted(players)) {
                 dealer.dealCardTo(dealer);
@@ -47,13 +65,6 @@ public class Game {
                 dealer.stay();
             }
         } while (!dealer.isBusted() && !dealer.isStaying());
-
-        if (hasDealerWon(activePlayer)
-        ) {
-            return dealer.name();
-        } else {
-            return activePlayer.name();
-        }
     }
 
     private boolean atLeastOnePlayerHasNotBusted(List<Player> players) {
@@ -65,21 +76,5 @@ public class Game {
         return activePlayer.isBusted()
                 || !dealer.isBusted()
                 && dealer.totalHandValue() > activePlayer.totalHandValue();
-    }
-
-    private void hit(Player activePlayer) {
-        dealer.dealCardTo(activePlayer);
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public Player getDealer() {
-        return dealer;
-    }
-
-    public String winner() {
-        return winner;
     }
 }
