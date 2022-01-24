@@ -14,7 +14,6 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static tech.pathtoprogramming.blackjack.ActionType.HIT;
 import static tech.pathtoprogramming.blackjack.ActionType.STAY;
-import static tech.pathtoprogramming.blackjack.MultiplayerGameTest.PLAYER_2;
 
 @ExtendWith(MockitoExtension.class)
 class SinglePlayerGameTest {

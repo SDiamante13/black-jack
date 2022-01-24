@@ -73,6 +73,31 @@ class MultiplayerGameTest {
                 .contains(DEALER);
     }
 
+    @Test
+    @Disabled
+    void multiplePlayersBeatTheDealer() {
+        playerChoosesTo(mockActionInputPlayer1, STAY);
+        playerChoosesTo(mockActionInputPlayer2, STAY);
+        List<Card> player1Cards = List.of(Card.QUEEN, Card.KING);
+        List<Card> player2Cards = List.of(Card.QUEEN, Card.KING);
+        List<Card> dealerCards = List.of(Card.TEN, Card.FIVE, Card.NINE);
+        given(mockDeck.drawCard())
+                .willReturn(
+                        player1Cards.get(0),
+                        player2Cards.get(0),
+                        dealerCards.get(0),
+                        player1Cards.get(1),
+                        player2Cards.get(1),
+                        dealerCards.get(1),
+                        dealerCards.get(2)
+                );
+
+        List<Player> winners = game.play();
+
+        assertThat(winners).extracting("name")
+                .contains(PLAYER_1, PLAYER_2);
+    }
+
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
         given(actionInput.nextActionType()).willReturn(actionType);
     }
