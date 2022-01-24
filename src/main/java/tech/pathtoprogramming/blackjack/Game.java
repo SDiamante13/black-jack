@@ -17,7 +17,7 @@ public class Game {
     public List<Player> play() {
         // TODO: clear state of players
 
-        dealer.initialDeal(players);
+        dealer.dealInitialCards(players);
 
         eachPlayerPlaysHand(players);
         dealerPlaysHand();
