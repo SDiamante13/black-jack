@@ -14,7 +14,7 @@ public class Game {
         this.players = players;
     }
 
-    public String play() {
+    public List<Player> play() {
         // TODO: clear state of players
 
         dealer.initialDeal(players);
@@ -24,9 +24,9 @@ public class Game {
 
         if (hasDealerWon(players)
         ) {
-            return dealer.name();
+            return List.of(dealer);
         } else {
-            return players.get(0).name();
+            return List.of(players.get(0));
         }
     }
 

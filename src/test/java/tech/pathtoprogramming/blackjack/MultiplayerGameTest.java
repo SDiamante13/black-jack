@@ -67,11 +67,11 @@ class MultiplayerGameTest {
                         player2Cards.get(2)
                 );
 
-        String winner = game.play();
+        List<Player> winners = game.play();
 
-        assertThat(winner).isEqualTo(DEALER);
+        assertThat(winners).extracting("name")
+                .contains(DEALER);
     }
-
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
         given(actionInput.nextActionType()).willReturn(actionType);

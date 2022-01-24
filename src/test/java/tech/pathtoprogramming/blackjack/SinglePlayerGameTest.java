@@ -14,6 +14,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static tech.pathtoprogramming.blackjack.ActionType.HIT;
 import static tech.pathtoprogramming.blackjack.ActionType.STAY;
+import static tech.pathtoprogramming.blackjack.MultiplayerGameTest.PLAYER_2;
 
 @ExtendWith(MockitoExtension.class)
 class SinglePlayerGameTest {
@@ -54,9 +55,10 @@ class SinglePlayerGameTest {
                         player1Cards.get(2)
                 );
 
-        String winner = game.play();
+        List<Player> winners = game.play();
 
-        assertThat(winner).isEqualTo(DEALER);
+        assertThat(winners).extracting("name")
+                .contains(DEALER);
         then(mockDeck)
                 .should(times(5))
                 .drawCard();
@@ -76,9 +78,10 @@ class SinglePlayerGameTest {
                         dealerCards.get(2)
                 );
 
-        String winner = game.play();
+        List<Player> winners = game.play();
 
-        assertThat(winner).isEqualTo(PLAYER_1);
+        assertThat(winners).extracting("name")
+                .contains(PLAYER_1);
     }
 
     @Test
@@ -95,9 +98,10 @@ class SinglePlayerGameTest {
                         dealerCards.get(2)
                 );
 
-        String winner = game.play();
+        List<Player> winners = game.play();
 
-        assertThat(winner).isEqualTo(DEALER);
+        assertThat(winners).extracting("name")
+                .contains(DEALER);
     }
 
     @Test
@@ -113,9 +117,10 @@ class SinglePlayerGameTest {
                         dealerCards.get(1)
                 );
 
-        String winner = game.play();
+        List<Player> winners = game.play();
 
-        assertThat(winner).isEqualTo(DEALER);
+        assertThat(winners).extracting("name")
+                .contains(DEALER);
     }
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
