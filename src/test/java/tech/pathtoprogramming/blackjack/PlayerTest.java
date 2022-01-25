@@ -29,4 +29,5 @@ class PlayerTest {
 
         assertThat(player.totalHandValue()).isEqualTo(12);
     }
+
 }

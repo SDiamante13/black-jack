@@ -1,9 +1,12 @@
 package tech.pathtoprogramming.blackjack;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -40,9 +43,14 @@ class SinglePlayerGameTest {
         );
     }
 
+    @AfterEach
+    void tearDown() {
+        Mockito.reset(mockDeck, mockActionInput);
+    }
+
     @Test
     void player1Busts_dealerWins_withoutNeedingToHit() {
-        playerChoosesTo(mockActionInput, HIT);
+        given(mockActionInput.nextActionType()).willReturn(HIT);
         List<Card> player1Cards = BUSTED_HAND;
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE);
         given(mockDeck.drawCard())
@@ -64,7 +72,7 @@ class SinglePlayerGameTest {
 
     @Test
     void player1ChoosesToStay_dealerBusts_player1Wins() {
-        playerChoosesTo(mockActionInput, STAY);
+        given(mockActionInput.nextActionType()).willReturn(STAY);
         List<Card> player1Cards = List.of(Card.TEN, Card.FIVE);
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE, Card.KING);
         given(mockDeck.drawCard())
@@ -84,7 +92,7 @@ class SinglePlayerGameTest {
 
     @Test
     void player1DoesNotBust_dealerHasHigherTotal_dealerWins() {
-        playerChoosesTo(mockActionInput, STAY);
+        given(mockActionInput.nextActionType()).willReturn(STAY);
         List<Card> player1Cards = List.of(Card.TEN, Card.FIVE);
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE, Card.SEVEN);
         given(mockDeck.drawCard())
@@ -103,15 +111,85 @@ class SinglePlayerGameTest {
 
     @Test
     void allPlayersBust_dealerDoesNotHit_dealerWins() {
-        playerChoosesTo(mockActionInput, STAY);
-        List<Card> player1Cards = List.of(Card.TEN, Card.FIVE, Card.KING);
+        given(mockActionInput.nextActionType()).willReturn(HIT);
+        List<Card> player1Cards = BUSTED_HAND;
         List<Card> dealerCards = List.of(Card.TEN, Card.THREE);
         given(mockDeck.drawCard())
                 .willReturn(
                         player1Cards.get(0),
                         dealerCards.get(0),
                         player1Cards.get(1),
-                        dealerCards.get(1)
+                        dealerCards.get(1),
+                        player1Cards.get(2)
+                );
+
+        List<Player> winners = game.play();
+
+        thenDealerWins(winners);
+    }
+
+    @Test
+    void player1GetsABunchOfAces_player1Wins() {
+        given(mockActionInput.nextActionType()).willReturn(HIT, HIT, STAY);
+        List<Card> player1Cards = List.of(Card.ACE, Card.FIVE, Card.ACE, Card.FOUR);
+        List<Card> dealerCards = List.of(Card.TEN, Card.THREE, Card.SEVEN);
+        given(mockDeck.drawCard())
+                .willReturn(
+                        player1Cards.get(0),
+                        dealerCards.get(0),
+                        player1Cards.get(1),
+                        dealerCards.get(1),
+                        player1Cards.get(2),
+                        player1Cards.get(3),
+                        dealerCards.get(2)
+                );
+
+        List<Player> winners = game.play();
+
+        assertThat(winners).extracting("name")
+                .contains(PLAYER_1);
+    }
+
+    @Test
+    void dealerGetsABunchOfAces_dealerWins() {
+        given(mockActionInput.nextActionType()).willReturn(HIT, STAY);
+        List<Card> player1Cards = List.of(Card.NINE, Card.FOUR, Card.THREE);
+        List<Card> dealerCards = List.of(Card.TEN, Card.FOUR, Card.ACE, Card.ACE, Card.ACE);
+        given(mockDeck.drawCard())
+                .willReturn(
+                        player1Cards.get(0),
+                        dealerCards.get(0),
+                        player1Cards.get(1),
+                        dealerCards.get(1),
+                        player1Cards.get(2),
+                        dealerCards.get(2),
+                        dealerCards.get(3),
+                        dealerCards.get(4)
+                );
+
+        List<Player> winners = game.play();
+
+        thenDealerWins(winners);
+    }
+
+    @Test
+    @Disabled
+    void dealerContinuesToHitAfterBeingDealtManyAces_dealerWins() {
+        given(mockActionInput.nextActionType()).willReturn(HIT, STAY);
+        List<Card> player1Cards = List.of(Card.NINE, Card.FOUR, Card.THREE);
+        List<Card> dealerCards = List.of(Card.TEN, Card.TWO, Card.ACE, Card.ACE, Card.ACE, Card.ACE, Card.ACE);
+        given(mockDeck.drawCard())
+                .willReturn(
+                        player1Cards.get(0),
+                        dealerCards.get(0),
+                        player1Cards.get(1),
+                        dealerCards.get(1),
+                        player1Cards.get(2),
+                        dealerCards.get(2),
+                        dealerCards.get(3),
+                        dealerCards.get(4),
+                        dealerCards.get(5),
+                        dealerCards.get(6)
                 );
 
         List<Player> winners = game.play();
@@ -121,9 +199,5 @@ class SinglePlayerGameTest {
 
     private void thenDealerWins(List<Player> winners) {
         assertThat(winners).isEmpty();
-    }
-
-    private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
-        given(actionInput.nextActionType()).willReturn(actionType);
     }
 }

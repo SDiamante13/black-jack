@@ -31,6 +31,42 @@ class HandTest {
     }
 
     @Test
+    void totalValue_returnsTwoSumsWhenAceIsPresent() {
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.THREE);
+        TotalValue expectedTotalValue = new TotalValue(14, 4);
+
+        TotalValue actualTotalValue = hand.totalValue();
+
+        assertThat(actualTotalValue).isEqualTo(expectedTotalValue);
+    }
+
+    @Test
+    void totalValue_Aces2() {
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.THREE);
+        hand.addCard(Card.ACE);
+        TotalValue expectedTotalValue = new TotalValue(15, 5);
+
+        TotalValue actualTotalValue = hand.totalValue();
+
+        assertThat(actualTotalValue).isEqualTo(expectedTotalValue);
+    }
+
+    @Test
+    void totalValue_Aces3() {
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.SIX);
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.ACE);
+        TotalValue expectedTotalValue = new TotalValue(19, 9);
+
+        TotalValue actualTotalValue = hand.totalValue();
+
+        assertThat(actualTotalValue).isEqualTo(expectedTotalValue);
+    }
+
+    @Test
     void isBusted_returnsFalseWhenTheTotalValueIsLessThanOrEqualTo21() {
         hand.addCard(Card.TWO);
         hand.addCard(Card.THREE);
@@ -49,5 +85,18 @@ class HandTest {
         boolean isHandBusted = hand.isBusted();
 
         assertThat(isHandBusted).isTrue();
+    }
+
+    @Test
+    void isBusted_takesTheLessOfTwoValues() {
+        hand.addCard(Card.TEN);
+        hand.addCard(Card.FOUR);
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.ACE);
+        hand.addCard(Card.ACE);
+
+        boolean isHandBusted = hand.isBusted();
+
+        assertThat(isHandBusted).isFalse();
     }
 }
