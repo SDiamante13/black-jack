@@ -2,7 +2,6 @@ package tech.pathtoprogramming.blackjack;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -172,11 +171,20 @@ class SinglePlayerGameTest {
         thenDealerWins(winners);
     }
 
+    @SuppressWarnings("checkstyle:MethodLength")
     @Test
     void dealerContinuesToHitAfterBeingDealtManyAces_dealerWins() {
         given(mockActionInput.nextActionType()).willReturn(HIT, STAY);
         List<Card> player1Cards = List.of(Card.NINE, Card.FOUR, Card.THREE);
-        List<Card> dealerCards = List.of(Card.TEN, Card.TWO, Card.ACE, Card.ACE, Card.ACE, Card.ACE, Card.ACE);
+        List<Card> dealerCards = List.of(
+                Card.TEN,
+                Card.TWO,
+                Card.ACE,
+                Card.ACE,
+                Card.ACE,
+                Card.ACE,
+                Card.ACE
+        );
         given(mockDeck.drawCard())
                 .willReturn(
                         player1Cards.get(0),
