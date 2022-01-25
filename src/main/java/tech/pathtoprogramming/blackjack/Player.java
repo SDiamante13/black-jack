@@ -30,7 +30,7 @@ public class Player {
     }
 
     public int totalHandValue() {
-        return hand.totalValue();
+        return hand.totalValue().getValue();
     }
 
     public boolean isBusted() {

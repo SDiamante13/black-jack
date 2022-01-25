@@ -23,10 +23,11 @@ class HandTest {
     void totalValue_calculatesTheHandsTotalValue() {
         hand.addCard(Card.TWO);
         hand.addCard(Card.THREE);
+        TotalValue expectedTotalValue = new TotalValue(5, Integer.MAX_VALUE);
 
-        int actualTotalValue = hand.totalValue();
+        TotalValue actualTotalValue = hand.totalValue();
 
-        assertThat(actualTotalValue).isEqualTo(5);
+        assertThat(actualTotalValue).isEqualTo(expectedTotalValue);
     }
 
     @Test

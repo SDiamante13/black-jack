@@ -13,7 +13,7 @@ public enum Card {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
-    ACE_HIGH("A", 11);
+    ACE("A", 11);
 
     Card(String rank, int value) {
         this.rank = rank;

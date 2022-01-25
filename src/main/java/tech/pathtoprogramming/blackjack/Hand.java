@@ -18,13 +18,18 @@ public class Hand {
         cards.add(card);
     }
 
-    public int totalValue() {
-        return cards.stream()
-                .map(Card::value)
-                .reduce(0, Integer::sum);
+    // TODO: Calculate two sums if an A is present in the hand
+    public TotalValue totalValue() {
+        int sum = 0;
+        for (Card card : cards) {
+            int value = card.value();
+            sum = sum + value;
+        }
+
+        return new TotalValue(sum, Integer.MAX_VALUE);
     }
 
     boolean isBusted() {
-        return totalValue() > 21;
+        return totalValue().getValue() > 21;
     }
 }
