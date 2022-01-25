@@ -173,7 +173,6 @@ class SinglePlayerGameTest {
     }
 
     @Test
-    @Disabled
     void dealerContinuesToHitAfterBeingDealtManyAces_dealerWins() {
         given(mockActionInput.nextActionType()).willReturn(HIT, STAY);
         List<Card> player1Cards = List.of(Card.NINE, Card.FOUR, Card.THREE);

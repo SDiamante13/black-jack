@@ -30,7 +30,10 @@ public class Player {
     }
 
     public int totalHandValue() {
-        return hand.totalValue().getValue();
+        if (hand.isBusted()) return hand.totalValue().getValue();
+        return hand.totalValue().getValue() > 21 ?
+                hand.totalValue().getAlternateValue() :
+                hand.totalValue().getValue();
     }
 
     public boolean isBusted() {
@@ -46,6 +49,6 @@ public class Player {
     }
 
     public void stay() {
-       this.stay = true;
+        this.stay = true;
     }
 }
