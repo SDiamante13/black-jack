@@ -2,6 +2,7 @@ package tech.pathtoprogramming.blackjack;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static tech.pathtoprogramming.blackjack.ActionType.HIT;
 import static tech.pathtoprogramming.blackjack.ActionType.STAY;
@@ -23,12 +24,12 @@ public class Game {
         eachPlayerPlaysHand(players);
         dealerPlaysHand();
 
-        if (hasDealerWon(players)
-        ) {
+
+        if (allPlayersBust(players)) {
             return Collections.emptyList();
-        } else {
-            return List.of(players.get(0));
         }
+
+        return determineWinners(players);
     }
 
     private void eachPlayerPlaysHand(List<Player> players) {
@@ -58,16 +59,20 @@ public class Game {
                 .anyMatch(player -> !player.isBusted());
     }
 
-    private boolean hasDealerWon(List<Player> players) {
-        Player player = players.get(0);
-
-        return allPlayersBust(players)
-                || !dealer.isBusted()
-                && dealer.totalHandValue() > player.totalHandValue();
-    }
-
     private boolean allPlayersBust(List<Player> players) {
         return players.stream()
                 .allMatch(Player::isBusted);
+    }
+
+    private List<Player> determineWinners(List<Player> players) {
+        return players.stream()
+                .filter(this::isPlayerWinner)
+                .collect(Collectors.toList());
+    }
+
+    private boolean isPlayerWinner(Player player) {
+        return player.totalHandValue() > dealer.totalHandValue()
+                || !player.isBusted()
+                && dealer.isBusted();
     }
 }

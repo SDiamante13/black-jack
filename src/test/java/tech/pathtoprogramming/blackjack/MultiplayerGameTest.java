@@ -73,7 +73,6 @@ class MultiplayerGameTest {
     }
 
     @Test
-    @Disabled
     void multiplePlayersBeatTheDealer() {
         playerChoosesTo(mockActionInputPlayer1, STAY);
         playerChoosesTo(mockActionInputPlayer2, STAY);
@@ -95,6 +94,29 @@ class MultiplayerGameTest {
 
         assertThat(winners).extracting("name")
                 .contains(PLAYER_1, PLAYER_2);
+    }
+
+    @Test
+    void multiplePlayersLoseToTheDealer() {
+        playerChoosesTo(mockActionInputPlayer1, STAY);
+        playerChoosesTo(mockActionInputPlayer2, STAY);
+        List<Card> player1Cards = List.of(Card.QUEEN, Card.FIVE);
+        List<Card> player2Cards = List.of(Card.QUEEN, Card.FIVE);
+        List<Card> dealerCards = List.of(Card.TEN, Card.TWO, Card.NINE);
+        given(mockDeck.drawCard())
+                .willReturn(
+                        player1Cards.get(0),
+                        player2Cards.get(0),
+                        dealerCards.get(0),
+                        player1Cards.get(1),
+                        player2Cards.get(1),
+                        dealerCards.get(1),
+                        dealerCards.get(2)
+                );
+
+        List<Player> winners = game.play();
+
+        thenDealerWins(winners);
     }
 
     private void playerChoosesTo(ActionInput actionInput, ActionType actionType) {
