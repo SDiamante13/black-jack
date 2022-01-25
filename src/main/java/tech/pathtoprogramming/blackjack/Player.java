@@ -34,7 +34,7 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return hand.isHandBusted();
+        return hand.isBusted();
     }
 
     public ActionType nextActionType() {

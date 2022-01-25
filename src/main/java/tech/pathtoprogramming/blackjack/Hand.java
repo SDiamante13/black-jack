@@ -24,7 +24,7 @@ public class Hand {
                 .reduce(0, Integer::sum);
     }
 
-    boolean isHandBusted() {
+    boolean isBusted() {
         return totalValue() > 21;
     }
 }
