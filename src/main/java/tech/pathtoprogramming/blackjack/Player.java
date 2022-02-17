@@ -1,19 +1,23 @@
 package tech.pathtoprogramming.blackjack;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Player {
     private final String name;
+    private final Hand hand;
+
     private ActionInput actionInput;
-    private Hand hand;
     private boolean stay;
 
-    public Player(String name) {
+    public Player(String name, Hand hand) {
         this.name = name;
-        this.hand = new Hand();
+        this.hand = hand;
         this.stay = false;
     }
 
-    public Player(String name, ActionInput actionInput) {
-        this(name);
+    public Player(String name, Hand hand, ActionInput actionInput) {
+        this(name, hand);
         this.actionInput = actionInput;
     }
 
@@ -53,5 +57,11 @@ public class Player {
 
     public void stay() {
         this.stay = true;
+    }
+
+    public String showCards() {
+        return hand.showCards().stream()
+                .map(Card::cardRank)
+                .collect(Collectors.joining(","));
     }
 }

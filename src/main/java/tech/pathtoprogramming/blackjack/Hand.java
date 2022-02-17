@@ -2,6 +2,7 @@ package tech.pathtoprogramming.blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
     private List<Card> cards;
@@ -43,5 +44,10 @@ public class Hand {
 
     boolean isBusted() {
         return totalValue().getValue() > 21 && totalValue().getAlternateValue() > 21;
+    }
+
+    public List<Card> showCards() {
+        return cards.stream()
+                .collect(Collectors.toUnmodifiableList());
     }
 }

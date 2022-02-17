@@ -1,9 +1,15 @@
 package tech.pathtoprogramming.blackjack;
 
 
+import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
 
@@ -98,5 +104,32 @@ class HandTest {
         boolean isHandBusted = hand.isBusted();
 
         assertThat(isHandBusted).isFalse();
+    }
+
+    @Test
+    void aPlayersHandCanBeSeenByAllPlayers() {
+        hand.addCard(Card.TEN);
+        hand.addCard(Card.KING);
+
+        List<Card> cards = hand.showCards();
+
+        assertThat(cards)
+                .extracting("rank", "value")
+                .contains(
+                        tuple("10", 10),
+                        tuple("K", 10)
+                );
+    }
+
+    @Test
+    void aPlayersHandCanOnlyBeModifiedByTheDealer() {
+        hand.addCard(Card.TEN);
+        hand.addCard(Card.KING);
+
+        List<Card> cards = hand.showCards();
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> cards.add(Card.ACE)
+        );
     }
 }

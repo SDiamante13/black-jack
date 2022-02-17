@@ -76,4 +76,13 @@ class DealerTest {
                 () -> dealer.dealInitialCards(null)
         );
     }
+
+    @Test
+    void dealerCanShuffleTheDeckOfCards() {
+        dealer.shuffleDeck();
+
+        then(mockDeck)
+                .should()
+                .shuffle();
+    }
 }

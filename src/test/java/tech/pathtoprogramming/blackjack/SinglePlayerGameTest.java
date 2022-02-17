@@ -38,7 +38,7 @@ class SinglePlayerGameTest {
     void setUp() {
         game = new Game(
                 new Dealer(DEALER, mockDeck),
-                List.of(new Player(PLAYER_1, mockActionInput))
+                List.of(new Player(PLAYER_1, new Hand(), mockActionInput))
         );
     }
 
